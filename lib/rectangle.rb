@@ -1,5 +1,5 @@
 class Rectangle
-  attr_reader :x_range, :y_range
+  attr_reader :x_range, :y_range, :value
 
   class << self
 
@@ -23,10 +23,11 @@ class Rectangle
 
   end
   
-  def initialize(x_range, y_range)
+  def initialize(x_range, y_range, value = nil)
     self.class.validate_ranges(x_range, y_range)
     @x_range = x_range
     @y_range = y_range
+    @value   = value
   end
 
   def intersects?(rectangle)

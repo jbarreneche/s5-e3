@@ -7,13 +7,13 @@ class SegmentedLine
     @segments      = Array.new(number_of_segments.ceil) { yield }
   end
 
-  def select_in_range(range)
+  def [](range)
     lower  = map_lower_bound(range.min)
     higher = map_higher_bound(range.max)
     segments[lower..higher]
   end
 
-  def size
+  def segments_count
     segments.size
   end
 

@@ -1,10 +1,11 @@
 require_relative '../test_helper'
-require 'plane/bin_store'
+
+require 'bin_store'
 
 class BinStoreTest < MiniTest::Unit::TestCase
 
   def setup
-    @bin = Plane::BinStore.new(200, 300, :bin_size => "10x10")
+    @bin = BinStore.new(200, 300, :bin_size => "10x10")
   end
 
   def test_store_width
@@ -25,6 +26,11 @@ class BinStoreTest < MiniTest::Unit::TestCase
 
     query_results = @bin.query Rectangle.new(0..10, 0..10)
     assert_equal [one_rectangle], query_results
+  end
+
+  def test_store_returns_stored_rectangle
+    rectangle_one = Rectangle.new(0..20, 0..20)
+    assert_equal rectangle_one, @bin.store(rectangle_one)
   end
 
   def test_store_multiple_rectangles

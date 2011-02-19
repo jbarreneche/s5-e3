@@ -2,10 +2,9 @@ class SegmentedLine
 
   attr_reader :segments
 
-  def initialize(total_width, segment_width)
-    @segment_width = segment_width.to_f
-    size           = (total_width / segment_width).ceil
-    @segments      = Array.new(size) { yield }
+  def initialize(total_width, number_of_segments)
+    @segment_width = total_width / number_of_segments.to_f
+    @segments      = Array.new(number_of_segments.ceil) { yield }
   end
 
   def select_in_range(range)

@@ -12,10 +12,7 @@ class BinStorePerformance < MiniTest::Unit::TestCase
   end
 
   def setup
-    @vertical_bin = Plane::BinStore.new(
-      :size     => "10x1000_000",
-      :bin_size => "10x10"
-    )
+    @vertical_bin = Plane::BinStore.new(10, 1000_000, :bin_size => "10x10")
   end
 
   # inserting a candidate into 1 bin is constant time. 
@@ -47,14 +44,13 @@ class BinStorePerformance < MiniTest::Unit::TestCase
   # end
 
   def concentrated_bin(number_of_bins)
-    bin = Plane::BinStore.new(
-      :size     => "20x20",
-      :bin_size => "10x10"
-    )
+    bin = Plane::BinStore.new(20, 20, :bin_size => "10x10")
+
     number_of_bins.times do
       @last_rectangle = Rectangle.new(0..9, 0..9)
       bin.store @last_rectangle
     end
+
     bin
   end
 

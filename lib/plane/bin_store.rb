@@ -6,11 +6,17 @@ module Plane
 
     attr_reader :width, :height
 
-    def initialize(opts = {})
-      @width,     @height     = split_size(opts[:size], opts[:width], opts[:height])
-      @bin_width, @bin_height = split_size(opts[:bin_size], opts[:bin_width], opts[:bin_height])
-      @grid = SegmentedLine.new(@width, @bin_width) do
-                SegmentedLine.new(@height, @bin_height) { Bin.new }
+    def initialize(width, height, options = {})
+      @width,     @height     = width, height
+
+      if options[:segmentation]
+        x_segment_count = y_segment_count = options[:segmentation]
+      else
+        x_segment_count,  y_segment_count = segmentation_from_bin_size(options)
+      end
+      
+      @grid = SegmentedLine.new(@width, x_segment_count) do
+                SegmentedLine.new(@height, y_segment_count) { Bin.new }
               end
     end
 
@@ -46,9 +52,18 @@ module Plane
       @grid
     end
 
-    def split_size(size, width, height)
-      values = size ? size.split('x') : [width, height]
-      values.map(&:to_i)
+    def split_size(size)
+      size.split('x').map(&:to_f)
+    end
+
+    def segmentation_from_bin_size(options)
+      bin_size = options[:bin_size]
+
+      bin_width, bin_height = split_size(bin_size) if bin_size
+      bin_width  ||= options[:bin_width] || (width / 100)
+      bin_height ||= options[:bin_height] || (height / 100)
+      
+      [(width / bin_width).ceil, (height / bin_height).ceil]
     end
 
   end

@@ -2,11 +2,9 @@ require_relative '../test_helper'
 require 'plane/bin_store'
 
 class BinStoreTest < MiniTest::Unit::TestCase
+
   def setup
-    @bin = Plane::BinStore.new(
-      :size => "200x300",
-      :bin_size => "10x10"
-    )
+    @bin = Plane::BinStore.new(200, 300, :bin_size => "10x10")
   end
 
   def test_store_width

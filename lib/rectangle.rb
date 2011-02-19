@@ -3,22 +3,28 @@ class Rectangle
 
   class << self
 
-    NOT_RANGE_MESSAGE = "Expected %{obj} to be a range"
-    NOT_INCREASING_RANGE = "Should be an increasing range: %{obj} (ie. min <= max)"
+    ERRORS = {
+      :not_a_range    => "Expected %{arg} to be a range",
+      :not_increasing => "Expected %{arg} to have a min and a max"
+    }
 
     def validate_ranges(*ranges)
       ranges.each do |range|
-        raise NOT_RANGE_MESSAGE % {obj: range} unless range?(range)
-        raise NOT_RANGE_MESSAGE % {obj: range} unless increasing_range?(range)
+        invalid_arg(range, :not_a_range)    unless range?(range)
+        invalid_arg(range, :not_increasing) unless increasing_range?(range)
       end
     end
-    
+
     def range?(obj)
       obj.respond_to?(:max) && obj.respond_to?(:min) 
     end
 
     def increasing_range?(obj)
-      obj.min <= obj.max 
+      obj.min && obj.max
+    end
+    
+    def invalid_arg(arg, message)
+      raise ArgumentError, ERRORS[message] % {:arg => arg} 
     end
 
   end

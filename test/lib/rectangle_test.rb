@@ -37,4 +37,9 @@ class RectangleTest < MiniTest::Unit::TestCase
   def test_auto_intersects
     assert @rectangle.intersects?(@rectangle)
   end
+  def test_validates_build_range
+    assert_raises(ArgumentError) do
+      Rectangle.new 4..10, 15..11
+    end
+  end
 end

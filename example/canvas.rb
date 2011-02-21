@@ -1,4 +1,4 @@
-require 'bin_store'
+require 'bin'
 
 class Canvas
 
@@ -8,23 +8,23 @@ class Canvas
     @store = options[:store]
     @store ||= begin
       builder = options.delete(:store_builder) 
-      builder ||= ->(width, height, opts) { BinStore.new(width, height, opts) }
+      builder ||= ->(width, height, opts) { Bin::Grid.new(width, height, opts) }
       builder.call(width, height, options)
     end
   end
 
   def draw_rectangle(x_range, y_range, value = nil)
-    Rectangle.new(x_range, y_range, value).tap do |rect|
-      store << rect
+    Bin::Rectangle.new(x_range, y_range, value).tap do |rect|
+      store.insert rect
     end
   end
 
   def drawings(x_range = 0..store.width, y_range = 0..store.height)
-    store.query Rectangle.new(x_range, y_range)
+    store.query Bin::Rectangle.new(x_range, y_range)
   end
 
   def erase_drawing(drawing)
-    store.remove(drawing)
+    store.delete(drawing)
   end
 
   def empty?

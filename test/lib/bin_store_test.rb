@@ -22,23 +22,18 @@ class BinStoreTest < MiniTest::Unit::TestCase
 
   def test_store_one_rectangle
     one_rectangle = Rectangle.new(0..20, 0..20)
-    @bin.store one_rectangle
+    @bin << one_rectangle
 
     query_results = @bin.query Rectangle.new(0..10, 0..10)
     assert_equal [one_rectangle], query_results
-  end
-
-  def test_store_returns_stored_rectangle
-    rectangle_one = Rectangle.new(0..20, 0..20)
-    assert_equal rectangle_one, @bin.store(rectangle_one)
   end
 
   def test_store_multiple_rectangles
 
     rectangle_one = Rectangle.new(0..20, 0..20)
     rectangle_two = Rectangle.new(20..40, 20..40)
-    @bin.store rectangle_one
-    @bin.store rectangle_two
+    @bin << rectangle_one
+    @bin << rectangle_two
 
     query_results = @bin.query Rectangle.new(0..10, 0..10)
     assert_equal [rectangle_one], query_results

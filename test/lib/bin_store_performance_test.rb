@@ -25,7 +25,7 @@ class BinStorePerformance < MiniTest::Unit::TestCase
   # Insertion is linear to the number of bins a candidate intersects because 
   def test_insertion_linear_to_number_of_candidates
     assert_performance_linear 0.95 do |n|
-      @vertical_bin.store Rectangle.new(0..9, 0..n)
+      @vertical_bin << Rectangle.new(0..9, 0..n)
     end
   end
 
@@ -48,7 +48,7 @@ class BinStorePerformance < MiniTest::Unit::TestCase
 
     number_of_bins.times do
       @last_rectangle = Rectangle.new(0..9, 0..9)
-      bin.store @last_rectangle
+      bin << @last_rectangle
     end
 
     bin

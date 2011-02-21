@@ -31,6 +31,7 @@ class Rectangle
   
   def initialize(x_range, y_range, value = nil)
     self.class.validate_ranges(x_range, y_range)
+
     @x_range = x_range
     @y_range = y_range
     @value   = value

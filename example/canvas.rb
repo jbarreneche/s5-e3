@@ -14,7 +14,9 @@ class Canvas
   end
 
   def draw_rectangle(x_range, y_range, value = nil)
-    store.store Rectangle.new(x_range, y_range, value)
+    Rectangle.new(x_range, y_range, value).tap do |rect|
+      store << rect
+    end
   end
 
   def drawings(x_range = 0..store.width, y_range = 0..store.height)

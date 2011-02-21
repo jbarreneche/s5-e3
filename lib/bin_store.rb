@@ -6,7 +6,7 @@ class BinStore
   attr_reader :width, :height
 
   def initialize(width, height, options = {})
-    @width,     @height     = width, height
+    @width, @height = width, height
 
     if options[:segmentation]
       x_segment_count = y_segment_count = options[:segmentation]
@@ -23,12 +23,12 @@ class BinStore
     grid.segments_count * grid.segments.first.segments_count
   end
 
-  def store(rectangle)
+  def <<(rectangle)
     each_bin_in(rectangle) do |bin|
-      bin.push(rectangle)
+      bin << rectangle
     end
 
-    rectangle
+    self
   end
 
   def query(query)
@@ -87,8 +87,9 @@ private
       @rectangles = []
     end
 
-    def push(rectangle)
+    def <<(rectangle)
       @rectangles << rectangle
+      self
     end
 
     def remove(rectangle)

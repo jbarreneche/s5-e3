@@ -5,7 +5,7 @@ require 'bin/grid'
 #
 # http://en.wikipedia.org/wiki/Bin_(computational_geometry)
 #
-class GridPerformance < MiniTest::Unit::TestCase
+class GridPerformanceTest < MiniTest::Unit::TestCase
 
   def self.bench_range
     bench_exp 10, 100_000

@@ -14,7 +14,7 @@ module Bin
       segments[lower..higher]
     end
 
-  private 
+    private
 
     def map_lower_bound(bound)
       return 0 unless bound > 0

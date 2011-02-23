@@ -15,10 +15,6 @@ class GridTest < MiniTest::Unit::TestCase
   def test_store_height
     assert_equal 300, @bin.height
   end
-  # 
-  # def test_number_of_bins
-  #   assert_equal 600, @bin.bin_count
-  # end
 
   def test_store_one_rectangle
     one_rectangle = Bin::Rectangle.new(0..20, 0..20)

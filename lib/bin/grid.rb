@@ -42,7 +42,7 @@ module Bin
       end
     end
 
-  private
+    private
 
     def each_bin_in(rectangle)
 

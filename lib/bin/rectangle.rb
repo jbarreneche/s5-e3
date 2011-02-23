@@ -38,7 +38,7 @@ module Bin
       x_range.max
     end
 
-  private
+    private
 
     def validate_ranges(*ranges)
       ranges.each do |range|

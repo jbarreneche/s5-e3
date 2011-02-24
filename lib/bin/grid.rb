@@ -8,12 +8,7 @@ module Bin
 
     def initialize(width, height, options = {})
       @width, @height = width, height
-
-      x_segment_count, y_segment_count = init_opt_parser(options)
-
-      @grid = SegmentedLine.new(width, x_segment_count) do
-                SegmentedLine.new(height, y_segment_count) { Bin.new }
-              end
+      @grid  = build_grid(options)
     end
 
     def insert(rectangle)
@@ -45,20 +40,18 @@ module Bin
     private
 
     def each_bin_in(rectangle)
-
       return enum_for(:each_bin_in, rectangle) unless block_given?
 
       @grid[rectangle.x_range].each do |line|
         line[rectangle.y_range].each {|bin| yield(bin) }
       end
-
     end
 
     def split_size(size)
       size.split('x').map(&:to_f)
     end
 
-    def init_opt_parser(options)
+    def segment_counts(options)
       if options[:segmentation]
 
         [options[:segmentation], options[:segmentation]]
@@ -71,6 +64,16 @@ module Bin
         bin_height ||= options[:bin_height] || (height / 100)
 
         [(width / bin_width).ceil, (height / bin_height).ceil]
+      end
+    end
+
+    def build_grid(options)
+      x_segment_count, y_segment_count = segment_counts(options)
+
+      SegmentedLine.new(width, x_segment_count) do
+        SegmentedLine.new(height, y_segment_count) do
+           Bin.new
+         end
       end
     end
 

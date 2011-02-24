@@ -18,11 +18,13 @@ module Bin
 
     def map_lower_bound(bound)
       return 0 unless bound > 0
+      
       (bound / @segment_width).ceil - 1
     end
 
     def map_higher_bound(bound)
       return -1 unless bound < max_bound
+      
       (bound / @segment_width).ceil - 1
     end
 
